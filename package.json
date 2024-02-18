@@ -70,6 +70,7 @@
     "open-cli": "^7.2.0",
     "pid-port": "^0.2.0",
     "prettier": "^2.1.1",
+    "reflect-metadata": "^0.1.12",
     "sinon": "^11.1.2",
     "standard-version": "^9.0.0",
     "ts-node": "^9.0.0",

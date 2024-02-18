@@ -1,0 +1,30 @@
+name: Verify Pull Request
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  verify_pull_request:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: ['14.x', '16.x', '18.x', '20.x']
+
+    steps:
+      - name: Git clone the repository
+        uses: actions/checkout@v4
+
+      - name: Use NodeJS ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build the code
+        run: npm run build
+
+      - name: Run test
+        run: npm run test
