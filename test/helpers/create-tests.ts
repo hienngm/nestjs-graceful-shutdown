@@ -86,11 +86,10 @@ export const createTests = (
 
   test('should terminate hanging sockets after gracefulShutdownTimeout', async (t) => {
     const spy = sinon.spy();
-    const gracefulShutdownTimeout = 300;
+    const gracefulShutdownTimeout = 500;
     const testingServer = await createNestJSTestingServer({
-      requestHandler: (res) => {
+      requestHandler: () => {
         spy();
-        res.end('');
       },
       GracefulShutdownModule: GracefulShutdownModule.forRoot({
         gracefulShutdownTimeout,
@@ -104,12 +103,17 @@ export const createTests = (
 
     t.timeout(5000);
 
-    await got(url);
+    got(url);
+
+    await delay(100);
 
     t.true(spy.called);
 
     shutdownServer();
 
+    await delay(100);
+
+    // The timeout has not passed.
     t.is(await getConnections(), 1);
 
     await delay(gracefulShutdownTimeout);
@@ -164,7 +168,9 @@ export const createTests = (
 
     t.timeout(5000);
 
-    const response0 = await got(url);
+    const request0 = got(url);
+
+    await delay(50);
 
     shutdownServer();
 
@@ -176,6 +182,7 @@ export const createTests = (
     });
 
     await t.throwsAsync(request1);
+    const response0 = await request0;
 
     t.is(response0.headers.connection, 'close');
     t.is(response0.body, 'foo');
