@@ -1,7 +1,9 @@
-name: Verify Pull Request
+name: E2E tests
 
 on:
   pull_request:
+    branches: [main]
+  push:
     branches: [main]
 
 jobs:
