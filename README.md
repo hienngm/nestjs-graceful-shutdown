@@ -104,6 +104,7 @@ interface IGracefulShutdownConfigOptions {
   /**
    * If set to `true`, the Node process will not be terminated
    * by a shutdown signal after closing all connections.
+   * The shutdown behavior is identical to invoking `app.close()`.
    * Defaults: false.
    */
   keepNodeProcessAlive?: boolean;
