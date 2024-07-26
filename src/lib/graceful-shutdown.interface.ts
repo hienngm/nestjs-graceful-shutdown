@@ -9,7 +9,7 @@ export interface IGracefulShutdownConfigOptions {
    * Cleanup function for releasing application resources
    * during server shutdown.
    */
-  cleanup?: (app: INestApplication) => any;
+  cleanup?: (app: INestApplication, signal?: string) => any;
   /**
    * The duration in milliseconds before forcefully
    * terminating a connection.

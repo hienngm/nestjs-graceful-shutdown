@@ -52,7 +52,7 @@ export class GracefulShutdownService
       throw SetupFunctionNotInvoked;
     }
 
-    await this.options.cleanup?.(this.app);
+    await this.options.cleanup?.(this.app, signal);
     if (signal && this.options.keepNodeProcessAlive) {
       this.skipShutdownSignal(signal);
     }

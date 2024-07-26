@@ -94,7 +94,7 @@ interface IGracefulShutdownConfigOptions {
    * Cleanup function for releasing application resources
    * during server shutdown.
    */
-  cleanup?: (app: INestApplication) => any;
+  cleanup?: (app: INestApplication, signal?: string) => any;
   /**
    * The duration in milliseconds before forcefully
    * terminating a connection.
@@ -151,7 +151,7 @@ import { GracefulShutdownModule } from 'nestjs-graceful-shutdown';
 @Module({
   imports: [
     GracefulShutdownModule.forRoot({
-      cleanup: async (app) => {
+      cleanup: async (app, signal) => {
         // releasing resources
       },
       gracefulShutdownTimeout:
