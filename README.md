@@ -19,6 +19,7 @@
 - [Installation](#installation)
 - [Example](#example)
 - [Configuration](#configuration)
+- [Testing Instructions](#testing-instructions)
 - [Contact and Feedback](#contact-and-feedback)
 - [License](#license)
 
@@ -202,6 +203,33 @@ class ConfigModule {}
   ...
 })
 class AppModule {}
+```
+
+### Testing Instructions
+
+When testing, you may need to override the graceful shutdown module with a mock module. Thanks to NestJS, this can easily be achieved using `overrideModule`. See the following example:
+
+```typescript
+const moduleFixture: TestingModule = await Test.createTestingModule({
+  imports: [AppModule],
+})
+  .overrideModule(GracefulShutdownModule)
+  .useModule(MockModule)
+  .compile();
+```
+
+If you don't want to use a `MockModule`, you can use `app.listen()` instead of `app.init()` in your test file.
+
+```typescript
+beforeEach(async () => {
+  const moduleFixture: TestingModule = await Test.createTestingModule({
+    imports: [AppModule],
+  }).compile();
+
+  app = moduleFixture.createNestApplication();
+  setupGracefulShutdown({ app });
+  await app.listen();
+});
 ```
 
 ## Contact and Feedback
