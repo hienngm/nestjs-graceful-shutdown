@@ -13,6 +13,14 @@
   </p>
 </p>
 
+> 🚀 **Looking for an enhanced version?** Check out [`@tygra/nestjs-graceful-shutdown`](https://www.npmjs.com/package/@tygra/nestjs-graceful-shutdown) - a production-ready fork with significant improvements:
+>
+> - **Comprehensive test coverage**: Achieved >99% statement coverage and >87% branch coverage with 44+ test cases
+> - **Robust error handling**: Improved fallback mechanisms and graceful degradation when termination fails
+> - **Edge case coverage**: Extensive testing of error scenarios including cleanup failures, termination errors, and signal handling
+>
+> We strongly recommend all users to use [`@tygra/nestjs-graceful-shutdown`](https://www.npmjs.com/package/@tygra/nestjs-graceful-shutdown) for enhanced reliability and better production support.
+
 ## Table of Contents
 
 - [Description](#description)
