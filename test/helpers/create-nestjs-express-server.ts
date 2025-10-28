@@ -1,6 +1,7 @@
 import { promisify } from 'util';
 
 import { NestFactory } from '@nestjs/core';
+import delay from 'delay';
 
 import { createAppModule } from './create-app-module';
 import { CatsController } from './test-controller';
@@ -27,8 +28,8 @@ export const createNestJSExpressServer: NestJSTestingServerFactory = async (
   const port = httpServer.address().port;
   const url = `http://localhost:${port}`;
 
-  const { portToPid } = await import('pid-port');
-  const pid = await portToPid(port);
+  await delay(1);
+
   return {
     getConnections,
     port,
@@ -36,7 +37,7 @@ export const createNestJSExpressServer: NestJSTestingServerFactory = async (
     url,
     app,
     shutdownServer: () => {
-      process.kill(pid, 'SIGTERM');
+      process.kill(process.pid, 'SIGTERM');
     },
     cleanupNestJSApp: async () => {
       await app.close();

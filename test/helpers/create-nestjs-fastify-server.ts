@@ -5,6 +5,7 @@ import {
   FastifyAdapter,
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
+import delay from 'delay';
 
 import { createAppModule } from './create-app-module';
 import { CatsController } from './test-controller';
@@ -34,8 +35,8 @@ export const createNestJSFastifyServer: NestJSTestingServerFactory = async (
   const port = httpServer.address().port;
   const url = `http://localhost:${port}`;
 
-  const { portToPid } = await import('pid-port');
-  const pid = await portToPid(port);
+  await delay(1);
+
   return {
     getConnections,
     port,
@@ -43,7 +44,7 @@ export const createNestJSFastifyServer: NestJSTestingServerFactory = async (
     url,
     app,
     shutdownServer: () => {
-      process.kill(pid, 'SIGTERM');
+      process.kill(process.pid, 'SIGTERM');
     },
     cleanupNestJSApp: async () => {
       await app.close();
